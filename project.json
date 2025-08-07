@@ -1,5 +1,5 @@
 {
-  "name": "@mfe-rspack/source",
+  "name": "@repo/source",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "targets": {
     "local-registry": {

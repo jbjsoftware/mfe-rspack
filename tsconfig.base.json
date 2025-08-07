@@ -15,6 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/components/*": ["src/packages/ui/src/components/ui/*"],
+      "@repo/core": ["src/packages/core/src/index.ts"],
+      "@repo/ui": ["src/packages/ui/src/index.ts"],
+      "@repo/ui/*": ["src/packages/ui/src/*"],
       "connections/Module": ["src/modules/connections/src/remote-entry.ts"],
       "dashboard/Module": ["src/modules/dashboard/src/remote-entry.ts"]
     }
