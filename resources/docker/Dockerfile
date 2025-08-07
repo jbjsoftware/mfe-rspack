@@ -27,8 +27,8 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy source code and configuration files
 COPY . .
 
-# Build all applications for production
-RUN pnpm nx run-many --target=build --projects=host,dashboard,connections --parallel=3
+# Build all applications for production (host + all modules)
+RUN pnpm nx run-many --target=build --all --parallel=3
 
 # Stage 3: Production runtime with nginx
 FROM nginx:alpine AS production
@@ -40,9 +40,10 @@ RUN rm -rf /usr/share/nginx/html/*
 # Host app (main application)
 COPY --from=builder /app/dist/src/apps/host /usr/share/nginx/html
 
-# Remote modules under /_mf/ to avoid React Router conflicts
-COPY --from=builder /app/dist/src/modules/dashboard /usr/share/nginx/html/dashboard
-COPY --from=builder /app/dist/src/modules/connections /usr/share/nginx/html/connections
+# Remote modules under /_mf/ to avoid React Router conflicts  
+# Copy all modules to both locations: direct access AND /_mf/ prefix
+COPY --from=builder /app/dist/src/modules/ /usr/share/nginx/html/
+COPY --from=builder /app/dist/src/modules/ /usr/share/nginx/html/_mf/
 
 # Copy nginx configuration
 COPY resources/docker/nginx.conf /etc/nginx/nginx.conf
