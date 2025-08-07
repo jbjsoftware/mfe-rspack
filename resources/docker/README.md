@@ -48,56 +48,43 @@ The remote modules expose their `remoteEntry.js` files at:
 
 ## Module Federation Configuration
 
-### For Production Deployment
+### ✅ Production Configuration (Already Implemented)
 
-You'll need to update your module federation configuration to use the production URLs. There are several approaches:
+The application is **already configured** for production deployment! No additional setup needed.
 
-#### Option 1: Environment-based Configuration
+#### How It Works
 
-Update your `module-federation.config.ts` files to use environment variables:
-
-```typescript
-// src/apps/host/module-federation.config.ts
-import { ModuleFederationConfig } from '@nx/module-federation';
-
-const config: ModuleFederationConfig = {
-  name: 'host',
-  remotes:
-    process.env['NODE_ENV'] === 'production'
-      ? [
-          ['dashboard', 'http://your-domain.com/_mf/dashboard'],
-          ['connections', 'http://your-domain.com/_mf/connections'],
-        ]
-      : ['dashboard', 'connections'], // Development uses default ports
-};
-
-export default config;
-```
-
-#### Option 2: Runtime Configuration
-
-Use Module Federation's runtime API to dynamically set remote URLs:
+The host application automatically detects the environment and uses the appropriate module loading strategy:
 
 ```typescript
-// In your bootstrap.tsx or app initialization
-import { init } from '@module-federation/enhanced/runtime';
+// src/apps/host/src/main.ts - Already implemented
+const isDevelopment = process.env['NODE_ENV'] !== 'production';
 
-if (process.env['NODE_ENV'] === 'production') {
+if (isDevelopment) {
+  // Development: Uses manifest.json for dynamic discovery
+  fetch('/assets/module-federation.manifest.json')
+    .then((res) => res.json())
+    .then((remotes) => Object.entries(remotes).map(([name, entry]) => ({ name, entry })))
+    .then((remotes) => init({ name: 'host', remotes }))
+    .then(() => import('./bootstrap'));
+} else {
+  // Production: Uses static /_mf/ paths
   init({
     name: 'host',
     remotes: [
-      {
-        name: 'dashboard',
-        entry: '/_mf/dashboard/remoteEntry.js',
-      },
-      {
-        name: 'connections',
-        entry: '/_mf/connections/remoteEntry.js',
-      },
+      { name: 'dashboard', entry: '/_mf/dashboard/remoteEntry.js' },
+      { name: 'connections', entry: '/_mf/connections/remoteEntry.js' },
     ],
-  });
+  }).then(() => import('./bootstrap'));
 }
 ```
+
+**Benefits:**
+
+- ✅ No manual configuration required
+- ✅ Works in both development and production
+- ✅ Development uses dynamic port discovery
+- ✅ Production uses static nginx paths
 
 ## Production Considerations
 

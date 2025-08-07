@@ -6,6 +6,22 @@ const config: ModuleFederationConfig = {
   exposes: {
     './Module': './src/remote-entry.ts',
   },
+  // Configure shared dependencies to match the host configuration
+  shared: (libraryName, defaultConfig) => {
+    // Force all React-related dependencies to be eager
+    if (
+      libraryName === 'react' ||
+      libraryName.startsWith('react-') ||
+      libraryName.startsWith('react/') // Include react/jsx-runtime, react/jsx-dev-runtime, etc.
+    ) {
+      return {
+        singleton: true,
+        eager: true,
+        requiredVersion: false, // Allow any version
+      };
+    }
+    return defaultConfig;
+  },
 };
 
 /**

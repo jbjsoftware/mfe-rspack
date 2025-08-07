@@ -14,7 +14,31 @@ const config: ModuleFederationConfig = {
    * declare module 'my-external-remote';
    *
    */
-  remotes: ['dashboard', 'connections'],
+  // Re-enable remotes with proper shared configuration
+  remotes:
+    process.env.NODE_ENV === 'production'
+      ? [
+          ['dashboard', '/_mf/dashboard/'],
+          ['connections', '/_mf/connections/'],
+        ]
+      : ['dashboard', 'connections'],
+
+  // Configure shared dependencies to load eagerly to avoid loadShareSync errors
+  shared: (libraryName, defaultConfig) => {
+    // Force all React-related dependencies to be eager
+    if (
+      libraryName === 'react' ||
+      libraryName.startsWith('react-') ||
+      libraryName.startsWith('react/') // Include react/jsx-runtime, react/jsx-dev-runtime, etc.
+    ) {
+      return {
+        singleton: true,
+        eager: true,
+        requiredVersion: false, // Allow any version
+      };
+    }
+    return defaultConfig;
+  },
 };
 
 /**

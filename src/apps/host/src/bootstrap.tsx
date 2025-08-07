@@ -4,9 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 import './styles.css';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+console.log('🔄 Bootstrap starting...');
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+const root = ReactDOM.createRoot(rootElement as HTMLElement);
 root.render(
   <StrictMode>
     <BrowserRouter>
@@ -14,3 +19,5 @@ root.render(
     </BrowserRouter>
   </StrictMode>
 );
+
+console.log('✅ Bootstrap completed');
