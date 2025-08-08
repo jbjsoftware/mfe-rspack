@@ -30,8 +30,10 @@
       "command": "docker",
       "args": [
         "run",
+        "-it",
+        "--rm",
         "-p",
-        "3000:80",
+        "80:80",                
         "mfe-rspack-app"
       ],
       "group": "test",
