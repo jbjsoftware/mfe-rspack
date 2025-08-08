@@ -1,12 +1,22 @@
 {
   "name": "@repo/ui",
-  "version": "0.0.1",
+  "version": "0.0.1",  
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "require": "./index.js"
-    }
+      "import": "./index.js",
+      "require": "./index.cjs"
+    },
+    "./index.css": "./src/index.css"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.537.0"
   }
 }

@@ -1,3 +1,10 @@
+# Build the image
+#docker build -f resources/docker/Dockerfile -t mfe-rspack-app .
+# Run the container
+#docker run -p 80:80 mfe-rspack-app
+# Access your app
+#open http://localhost
+
 # Multi-stage Dockerfile for Nx Module Federation with Rspack
 
 # Stage 1: Install dependencies
@@ -59,9 +66,6 @@ RUN mkdir -p /var/cache/nginx/client_temp \
 RUN chown -R nginx:nginx /var/cache/nginx \
     && chown -R nginx:nginx /usr/share/nginx/html \
     && chmod -R 755 /usr/share/nginx/html
-
-# Expose port
-EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

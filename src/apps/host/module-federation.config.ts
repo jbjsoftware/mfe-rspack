@@ -37,6 +37,16 @@ const config: ModuleFederationConfig = {
         requiredVersion: false, // Allow any version
       };
     }
+
+    // Share the UI package properly
+    if (libraryName === '@repo/ui') {
+      return {
+        singleton: true,
+        eager: true,
+        requiredVersion: false,
+      };
+    }
+
     return defaultConfig;
   },
 };

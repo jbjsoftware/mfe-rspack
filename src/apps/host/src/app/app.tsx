@@ -1,70 +1,54 @@
 import * as React from 'react';
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import { Button, Separator, Skeleton } from '@repo/ui';
 
 // Dynamically import remote modules with proper shared configuration
 const Dashboard = lazy(() => import('dashboard/Module'));
 const Connections = lazy(() => import('connections/Module'));
 
+const About = () => {
+  return <div>About</div>;
+};
+
 export function App() {
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="p-8 h-screen">
       <h1>🎉 Module Federation Host</h1>
       <p>Welcome to the Module Federation host application!</p>
       <p>Environment: {process.env.NODE_ENV || 'development'}</p>
 
-      <div
-        style={{
-          marginTop: '20px',
-          padding: '15px',
-          backgroundColor: '#f0f8ff',
-          border: '1px solid #0066cc',
-          borderRadius: '5px',
-        }}
-      >
-        <h3>✅ Status: Working</h3>
-        <p>React bootstrap is functioning correctly!</p>
-      </div>
+      <Button variant="default">Click me</Button>
+
+      <Separator className="my-4" />
+
+      <Skeleton className="w-full h-10" />
 
       {/* Navigation */}
       <nav style={{ margin: '20px 0' }}>
         <Link
           to="/"
-          style={{
-            marginRight: '10px',
-            textDecoration: 'none',
-            padding: '8px 16px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            borderRadius: '4px',
-          }}
+          className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
         >
           Home
         </Link>
         <Link
           to="/dashboard"
-          style={{
-            marginRight: '10px',
-            textDecoration: 'none',
-            padding: '8px 16px',
-            backgroundColor: '#28a745',
-            color: 'white',
-            borderRadius: '4px',
-          }}
+          className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
         >
           Dashboard
         </Link>
         <Link
           to="/connections"
-          style={{
-            textDecoration: 'none',
-            padding: '8px 16px',
-            backgroundColor: '#dc3545',
-            color: 'white',
-            borderRadius: '4px',
-          }}
+          className="bg-red-500 text-white rounded-md px-4 py-2"
         >
           Connections
+        </Link>
+        <Link
+          to="/about"
+          className="bg-yellow-500 text-white rounded-md px-4 py-2"
+        >
+          About
         </Link>
       </nav>
 
@@ -106,6 +90,7 @@ export function App() {
               </Suspense>
             }
           />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
     </div>

@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Docker Build mfe-rspack",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "build",
+        "-f",
+        "resources/docker/Dockerfile",
+        "-t",
+        "mfe-rspack-app",
+        "."
+      ],
+      "group":"build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []      
+    },
+    {
+      "label": "Docker Run mfe-rspack",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "run",
+        "-p",
+        "3000:80",
+        "mfe-rspack-app"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

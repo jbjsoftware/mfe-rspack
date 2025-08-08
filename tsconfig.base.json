@@ -3,8 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
+    "declaration": false,  
+    "moduleResolution": "node",  
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -15,9 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["src/packages/ui/src/components/ui/*"],
+      "@/components/*": ["src/packages/ui/src/components/*"],
+      "@/ui/*": ["src/packages/ui/src/components/ui/*"],
+      "@/lib/*": ["src/packages/ui/src/lib/*"],
+      "@/utils/*": ["src/packages/ui/src/lib/utils/*"],
+      "@/hooks/*": ["src/packages/ui/src/hooks/*"],
       "@repo/core": ["src/packages/core/src/index.ts"],
-      "@repo/ui": ["src/packages/ui/src/index.ts"],
+      "@repo/ui": ["dist/src/packages/ui"],
       "@repo/ui/*": ["src/packages/ui/src/*"],
       "connections/Module": ["src/modules/connections/src/remote-entry.ts"],
       "dashboard/Module": ["src/modules/dashboard/src/remote-entry.ts"]

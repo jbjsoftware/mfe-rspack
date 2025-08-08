@@ -1,5 +1,5 @@
 /// <reference types='vitest' />
-import { defineConfig } from 'vite';
+import { defineConfig, LibraryFormats } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import dts from 'vite-plugin-dts';
 import * as path from 'path';
@@ -16,9 +16,11 @@ export default defineConfig(() => ({
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
-      pathsToAliases: false,
     }),
   ],
+  css: {
+    postcss: './postcss.config.js',
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
@@ -39,7 +41,7 @@ export default defineConfig(() => ({
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
-      formats: ['es' as const],
+      formats: ['es', 'cjs'] as LibraryFormats[],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
