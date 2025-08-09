@@ -6,6 +6,9 @@
         "-y",
         "nx-mcp@latest"
       ]
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
     }
   }
 }
